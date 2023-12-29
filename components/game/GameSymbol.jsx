@@ -1,16 +1,13 @@
-import cls from "./game.module.css";
+import { clsx } from "clsx";
 import { SYMBOL_O, SYMBOL_X } from "./constants";
 
-export function GameSymbol({ symbol }) {
-  const getSymbolClassName = (symbol) => {
-    if (symbol === SYMBOL_O) return "symbol--o";
-    if (symbol === SYMBOL_X) return "symbol--x";
-    return "";
-  };
-
-  return (
-    <span className={`${cls.symbol} ${cls[getSymbolClassName(symbol)]}`}>
-      {symbol}
-    </span>
-  );
-}
+export const GameSymbol = ({ symbol }) => (
+  <span
+    className={clsx(
+      "text-xl leading-3",
+      symbol === SYMBOL_O ? "text-green-500" : " text-red-500",
+    )}
+  >
+    {symbol}
+  </span>
+);

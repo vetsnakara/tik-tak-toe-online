@@ -1,11 +1,7 @@
-import cls from "./game.module.css";
-
 import { GameSymbol } from "./GameSymbol";
 
 export function GameInfo({ isDraw, currentStep, winnerSymbol }) {
-  const Wrapper = ({ children }) => (
-    <div className={cls["game-info"]}>{children}</div>
-  );
+  const Wrapper = ({ children }) => <div className="mb-2">{children}</div>;
 
   if (isDraw) return <Wrapper>Ничья</Wrapper>;
 

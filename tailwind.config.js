@@ -9,7 +9,14 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateColumns: {
+        "game-field": "repeat(3, 30px)",
+      },
+      gridTemplateRows: {
+        "game-field": "repeat(3, 30px)",
+      },
+    },
   },
   plugins: [],
 };
