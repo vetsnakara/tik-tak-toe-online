@@ -5,11 +5,12 @@ import { GameField } from "../components/Game/GameField";
 import { Header } from "../components/Header";
 
 export default function HomePage() {
-    const [playersCount] = useState(4);
+    const [playersCount] = useState(2);
 
-    const { cells, currentMove, handleCellClick, nextMove } = useGameState({
-        playersCount,
-    });
+    const { cells, currentMove, handleCellClick, nextMove, winnerSequence } =
+        useGameState({
+            playersCount,
+        });
 
     return (
         <div className="bg-slate-50 min-h-screen">
@@ -25,6 +26,7 @@ export default function HomePage() {
                     cells={cells}
                     currentMove={currentMove}
                     nextMove={nextMove}
+                    winnerSequence={winnerSequence}
                     handleCellClick={handleCellClick}
                     className="mt-4"
                 />
