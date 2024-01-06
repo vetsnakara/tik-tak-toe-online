@@ -29,5 +29,5 @@ export function useGameState({ playersCount }) {
 
     const nextMove = getNextMove(gameState.currentMove, playersCount);
 
-    return { gameState, handleCellClick, nextMove };
+    return { ...gameState, handleCellClick, nextMove };
 }
