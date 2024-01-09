@@ -1,70 +1,11 @@
 import clsx from "clsx";
+import { useState, useEffect } from "react";
 
-import { Profile } from "../Profile";
-import { GameSymbol } from "./GameSymbol";
-import { GAME_SYMBOL } from "./constants";
+import { Profile } from "../../Profile";
+import { GameSymbol } from "../GameSymbol";
 
-import avatarSrc1 from "./images/avatar-1.png";
-import avatarSrc2 from "./images/avatar-2.png";
-import avatarSrc3 from "./images/avatar-3.png";
-import avatarSrc4 from "./images/avatar-4.png";
-import { useEffect, useState } from "react";
-
-const players = [
-    {
-        id: 1,
-        name: "Name1",
-        avatar: avatarSrc1,
-        rating: 111,
-        symbol: GAME_SYMBOL.CROSS,
-    },
-
-    {
-        id: 2,
-        isRight: true,
-        name: "Name2",
-        avatar: avatarSrc2,
-        rating: 222,
-        symbol: GAME_SYMBOL.SQUARE,
-    },
-    {
-        id: 3,
-        name: "Name3",
-        avatar: avatarSrc3,
-        rating: 333,
-        symbol: GAME_SYMBOL.TRIANGLE,
-    },
-    {
-        id: 4,
-        name: "Nameeeeeeeeeeee4",
-        avatar: avatarSrc4,
-        rating: 444,
-        symbol: GAME_SYMBOL.ZERO,
-    },
-];
-
-export function GameInfo({ className, playersCount, currentMove }) {
-    return (
-        <div
-            className={clsx(
-                "bg-white rounded-2xl shadow-md px-8 py-4 justify-between grid grid-cols-2 gap-3",
-                className,
-            )}
-        >
-            {players.slice(0, playersCount).map((player, index) => (
-                <PlayerInfo
-                    key={player.id}
-                    playerInfo={player}
-                    isRight={index % 2 === 1}
-                    isTimerRun={currentMove === player.symbol}
-                />
-            ))}
-        </div>
-    );
-}
-
-function PlayerInfo({ playerInfo, isRight, isTimerRun }) {
-    const SECONDS = 60;
+export function PlayerInfo({ playerInfo, isRight, isTimerRun, onTimeOver }) {
+    const SECONDS = 5;
 
     const [seconds, setSeconds] = useState(SECONDS);
 
@@ -72,8 +13,6 @@ function PlayerInfo({ playerInfo, isRight, isTimerRun }) {
         let interval = null;
 
         if (isTimerRun) {
-            setSeconds(SECONDS);
-
             interval = setInterval(() => {
                 setSeconds((s) => Math.max(s - 1, 0));
             }, 1000);
@@ -81,8 +20,14 @@ function PlayerInfo({ playerInfo, isRight, isTimerRun }) {
 
         return () => {
             clearInterval(interval);
+            setSeconds(SECONDS);
         };
     }, [isTimerRun]);
+
+    useEffect(() => {
+        if (seconds === 0) onTimeOver();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [seconds]);
 
     const isDanger = seconds <= 10;
     const minutesStr = String(Math.floor(seconds / 60)).padStart(2, "0");
