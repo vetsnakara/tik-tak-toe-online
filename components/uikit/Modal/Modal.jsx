@@ -1,7 +1,7 @@
-import { createPortal } from "react-dom";
 import clsx from "clsx";
 
 import { CrossLightIcon } from "./CrossLightIcon";
+import { Portal } from "../../Portal";
 
 /**
  * @param {{
@@ -53,7 +53,7 @@ export function Modal({
         </div>
     );
 
-    return createPortal(modal, document.getElementById("modals"));
+    return <Portal selector="#modals">{modal}</Portal>;
 }
 
 Modal.Header = function ModalHeader({ className, children }) {

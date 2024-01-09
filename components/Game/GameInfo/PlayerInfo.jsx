@@ -5,7 +5,7 @@ import { Profile } from "../../Profile";
 import { GameSymbol } from "../GameSymbol";
 
 export function PlayerInfo({ playerInfo, isRight, isTimerRun, onTimeOver }) {
-    const SECONDS = 5;
+    const SECONDS = 10;
 
     const [seconds, setSeconds] = useState(SECONDS);
 
