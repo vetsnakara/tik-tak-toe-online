@@ -48,7 +48,9 @@ export function useGameState({ playersCount }) {
     const winnerSequence = computeWinner(cells);
 
     const winnerSymbol =
-        nextMove === currentMove ? currentMove : winnerSequence?.[0];
+        nextMove === currentMove // only one player left
+            ? currentMove
+            : cells[winnerSequence?.[0]];
 
     return {
         currentMove,
