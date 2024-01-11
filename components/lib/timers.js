@@ -28,8 +28,5 @@ export function useInterval(interval, enabled, callback) {
         }, interval);
 
         return () => clearInterval(int);
-
-        // todo: useCallback
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [enabled, interval]);
+    }, [enabled, interval, callback]);
 }

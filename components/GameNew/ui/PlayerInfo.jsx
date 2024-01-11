@@ -1,21 +1,20 @@
 import clsx from "clsx";
 import Image from "next/image";
+import { memo } from "react";
 
 import { useNow } from "../../lib/timers";
 import { GameSymbol } from "./GameSymbol";
 
-export function PlayerInfo(props) {
-    const {
-        isRight,
-        name,
-        avatar,
-        rating,
-        symbol,
-        timer,
-        timerEnabled,
-        timerStartAt,
-    } = props;
-
+export const PlayerInfo = memo(function PlayerInfo({
+    isRight,
+    name,
+    avatar,
+    rating,
+    symbol,
+    timer,
+    timerEnabled,
+    timerStartAt,
+}) {
     const now = useNow(1000, timerEnabled);
     const ms = Math.max(
         timerEnabled && now ? timer - (now - timerStartAt) : timer,
@@ -73,4 +72,4 @@ export function PlayerInfo(props) {
             </div>
         </div>
     );
-}
+});

@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { memo } from "react";
 import { ArrowLeftIcon } from "./icons/ArrowLeftIcon";
 
-export function BackLink() {
+export const BackLink = memo(function BackLink() {
     return (
         <Link
             href="#"
@@ -11,4 +12,4 @@ export function BackLink() {
             На главную
         </Link>
     );
-}
+});

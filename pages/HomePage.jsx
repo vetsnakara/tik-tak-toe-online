@@ -1,6 +1,6 @@
-import { Header } from "../components/Header";
 import { Game } from "../components/GameNew";
 import { PLAYERS_COUNT } from "../components/GameNew/constants";
+import { Header } from "../components/Header";
 
 export default function HomePage() {
     return (

@@ -3,7 +3,7 @@ import avatarSrc2 from "./ui/images/avatar-2.png";
 import avatarSrc3 from "./ui/images/avatar-3.png";
 import avatarSrc4 from "./ui/images/avatar-4.png";
 
-export const PLAYERS_COUNT = 2;
+export const PLAYERS_COUNT = 4;
 
 export const GAME_SYMBOL = {
     ZERO: "zero",

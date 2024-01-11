@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useCallback, useMemo, useReducer } from "react";
 import { PLAYERS, PLAYERS_COUNT } from "./constants";
 
 import { BackLink } from "./ui/BackLink";
@@ -27,14 +27,14 @@ export function Game() {
         gameStateReducer,
         {
             playersCount: PLAYERS_COUNT,
-            defaultTimer: 5 * 1000,
+            defaultTimer: 20 * 1000,
             currentMoveStart: Date.now(),
         },
         initGameState,
     );
 
     const nextMove = getNextMove(gameState);
-    const winnerSequence = computeWinner(gameState);
+    const winnerSequence = useMemo(() => computeWinner(gameState), [gameState]);
 
     const winnerSymbol = computeWinnerSymbol(gameState, {
         winnerSequence,
@@ -45,14 +45,28 @@ export function Game() {
         (player) => player.symbol === winnerSymbol,
     );
 
-    useInterval(1000, !winnerSymbol, () => {
-        dispatch({
-            type: GAME_STATE_ACTIONS.TICK,
-            now: Date.now(),
-        });
-    });
+    useInterval(
+        1000,
+        !winnerSymbol,
+        useCallback(() => {
+            dispatch({
+                type: GAME_STATE_ACTIONS.TICK,
+                now: Date.now(),
+            });
+        }, []),
+    );
 
     const { currentMove, cells } = gameState;
+
+    const handleClick = useCallback(
+        (index) =>
+            dispatch({
+                type: GAME_STATE_ACTIONS.CELL_CLICK,
+                index,
+                now: Date.now(),
+            }),
+        [],
+    );
 
     return (
         <>
@@ -101,13 +115,8 @@ export function Game() {
                 gameCells={cells.map((symbol, index) => (
                     <GameCell
                         key={index}
-                        onClick={() =>
-                            dispatch({
-                                type: GAME_STATE_ACTIONS.CELL_CLICK,
-                                index,
-                                now: Date.now(),
-                            })
-                        }
+                        index={index}
+                        onClick={handleClick}
                         isWinner={winnerSequence?.includes(index)}
                         disabled={Boolean(winnerSymbol)}
                         symbol={symbol}

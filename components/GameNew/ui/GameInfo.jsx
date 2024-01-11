@@ -1,8 +1,13 @@
+import { memo } from "react";
+import { HistoryIcon } from "./icons/HistoryIcon";
 import { StarIcon } from "./icons/StarIcon";
 import { UserIcon } from "./icons/UserIcon";
-import { HistoryIcon } from "./icons/HistoryIcon";
 
-export function GameInfo({ playersCount, isRatingGame, timeMode }) {
+export const GameInfo = memo(function GameInfo({
+    playersCount,
+    isRatingGame,
+    timeMode,
+}) {
     return (
         <div className="flex items-center gap-3 text-xs text-slate-400">
             {isRatingGame && <StarIcon />}
@@ -14,4 +19,4 @@ export function GameInfo({ playersCount, isRatingGame, timeMode }) {
             </div>
         </div>
     );
-}
+});
