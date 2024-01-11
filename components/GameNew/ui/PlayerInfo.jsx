@@ -1,27 +1,39 @@
-import Image from "next/image";
-import { GameSymbol } from "./GameSymbol";
 import clsx from "clsx";
+import Image from "next/image";
 
-export function PlayerInfo({
-    isRight,
-    name,
-    avatar,
-    rating,
-    symbol,
-    isTimerRunning,
-    seconds,
-}) {
+import { useNow } from "../../lib/timers";
+import { GameSymbol } from "./GameSymbol";
+
+export function PlayerInfo(props) {
+    const {
+        isRight,
+        name,
+        avatar,
+        rating,
+        symbol,
+        timer,
+        timerEnabled,
+        timerStartAt,
+    } = props;
+
+    const now = useNow(1000, timerEnabled);
+    const ms = Math.max(
+        timerEnabled && now ? timer - (now - timerStartAt) : timer,
+        0,
+    );
+
+    const seconds = Math.ceil(ms / 1000);
+    const minutesStr = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const secondsStr = String(seconds % 60).padStart(2, "0");
+
+    const isDanger = seconds <= 10;
+
     const getTimerColor = () => {
-        if (isTimerRunning) {
+        if (timerStartAt)
             return isDanger ? "text-orange-600" : "text-slate-900";
-        }
 
         return "text-slate-200";
     };
-
-    const isDanger = seconds <= 10;
-    const minutesStr = String(Math.floor(seconds / 60)).padStart(2, "0");
-    const secondsStr = String(seconds % 60).padStart(2, "0");
 
     return (
         <div className="flex items-center gap-3">
