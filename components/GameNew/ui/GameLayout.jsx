@@ -9,7 +9,7 @@ export function GameLayout({
 }) {
     return (
         <div className="pb-10">
-            {/* Header */}
+            {/* Game Info */}
             <div className="pl-2">
                 {backLink}
                 {title}
@@ -25,21 +25,21 @@ export function GameLayout({
                 {playerList}
             </div>
 
-            {/* Game Info and Actions */}
             <div
                 className={
                     "mt-6 bg-white rounded-2xl shadow-md px-8  pt-5 pb-7"
                 }
             >
+                {/* Game Info and Actions */}
                 <div className="flex gap-3 items-center">
                     <div className="mr-auto">{gameMoveInfo}</div>
                     {actions}
                 </div>
-            </div>
 
-            {/* Game Grid */}
-            <div className="grid grid-cols-[repeat(19,_30px)] grid-rows-[repeat(19,_30px)] pl-px pt-px mt-3">
-                {gameCells}
+                {/* Game Grid */}
+                <div className="grid grid-cols-[repeat(19,_30px)] grid-rows-[repeat(19,_30px)] pl-px pt-px mt-3">
+                    {gameCells}
+                </div>
             </div>
         </div>
     );

@@ -1,3 +1,4 @@
+import { useReducer } from "react";
 import { PLAYERS, PLAYERS_COUNT } from "./constants";
 
 import { GameLayout } from "./ui/GameLayout";
@@ -7,23 +8,37 @@ import { GameInfo } from "./ui/GameInfo";
 import { PlayerInfo } from "./ui/PlayerInfo";
 import { GameMoveInfo } from "./ui/GameMoveInfo";
 import { GameCell } from "./ui/GameCell";
-
-import { useGameState } from "./model/useGameState";
 import { GameOverModal } from "./ui/GameOverModal";
 
+import { computeWinnerSymbol } from "./model/computeWinnerSymbol";
+import { getNextMove } from "./model/getNextMove";
+import { computeWinner } from "./model/computeWinner";
+import {
+    gameStateReducer,
+    initGameState,
+    GAME_STATE_ACTIONS,
+} from "./model/gameStateReducer";
+
 export function Game() {
-    const {
-        cells,
-        handleCellClick,
+    const [gameState, dispatch] = useReducer(
+        gameStateReducer,
+        { playersCount: PLAYERS_COUNT },
+        initGameState,
+    );
+
+    const nextMove = getNextMove(gameState);
+    const winnerSequence = computeWinner(gameState);
+
+    const winnerSymbol = computeWinnerSymbol(gameState, {
         winnerSequence,
-        winnerSymbol,
         nextMove,
-        currentMove,
-    } = useGameState({ playersCount: PLAYERS_COUNT });
+    });
 
     const winnerPlayer = PLAYERS.find(
         (player) => player.symbol === winnerSymbol,
     );
+
+    const { currentMove, cells } = gameState;
 
     return (
         <>
@@ -57,11 +72,16 @@ export function Game() {
                         nextMove={nextMove}
                     />
                 }
-                gameCells={cells.map((symbol, i) => (
+                gameCells={cells.map((symbol, index) => (
                     <GameCell
-                        key={i}
-                        onClick={() => handleCellClick(i)}
-                        isWinner={winnerSequence?.includes(i)}
+                        key={index}
+                        onClick={() =>
+                            dispatch({
+                                type: GAME_STATE_ACTIONS.CELL_CLICK,
+                                index,
+                            })
+                        }
+                        isWinner={winnerSequence?.includes(index)}
                         disabled={Boolean(winnerSymbol)}
                         symbol={symbol}
                     />

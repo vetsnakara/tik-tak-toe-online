@@ -6,7 +6,7 @@ export function GameOverModal({ winnerName, players }) {
         <Modal
             isOpen={winnerName}
             onClose={() => {
-                console.log("close");
+                // console.log("close");
             }}
             width="md"
         >
