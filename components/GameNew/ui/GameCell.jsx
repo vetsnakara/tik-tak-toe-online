@@ -3,15 +3,14 @@ import { memo } from "react";
 import { GameSymbol } from "./GameSymbol";
 
 export const GameCell = memo(function GameCell({
-    onClick,
+    id,
     isWinner,
     disabled,
     symbol,
-    index,
 }) {
     return (
         <button
-            onClick={() => onClick(index)}
+            data-cell-id={id}
             disabled={disabled}
             className={clsx(
                 "border border-slate-200 -ml-px -mt-px flex items-center justify-center",
