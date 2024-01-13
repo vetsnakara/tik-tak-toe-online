@@ -27,7 +27,7 @@ export function Game() {
         gameStateReducer,
         {
             playersCount: PLAYERS_COUNT,
-            defaultTimer: 3 * 1000,
+            defaultTimer: 60 * 1000,
             currentMoveStart: Date.now(),
         },
         initGameState,
